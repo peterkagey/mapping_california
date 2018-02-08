@@ -3,3 +3,4 @@
 *.hgt
 *.pdf
 *.tif
+__pycache__/*
