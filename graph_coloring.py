@@ -3,7 +3,7 @@
 from collections import OrderedDict
 import random
 
-def generate_intersections(reader, verbose=False):
+def generate_intersections(records, verbose=False):
     """
     Given cartopy shapereader with a set of multipolygons,
     generate a dictionary where the keys are city names,
@@ -13,7 +13,7 @@ def generate_intersections(reader, verbose=False):
     Parameters
     ----------
 
-    reader: cartopy shapefile reader
+    records: iterator over shapefile records
         This is the shapefile reader that is expected
         to have a series of OSM multipolygons corresponding
         to different cities.
@@ -33,12 +33,12 @@ def generate_intersections(reader, verbose=False):
         many purposes.
     """
     intersections = dict()
-    for city1 in reader.records():
+    for city1 in records:
         name1 = city1.attributes['name']
         if name1 == '' or name1 in intersections:
             continue
         intersections[name1] = []
-        for city2 in reader.records():
+        for city2 in records:
             name2 = city2.attributes['name']
             if name2 == '' or name1 == name2 or name2 in intersections[name1]:
                 continue
